@@ -1,0 +1,9 @@
+.map {
+    height: 580px;
+    width: 100%;
+}
+
+.dato {
+    transition: all 0.3s;
+    display: none;
+}
