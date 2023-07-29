@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true
+  production: true,
+  apiCupoExplora:'http://146.83.102.95/bd/public/cupo.php/api',
+  devApiCupoExplora:'http://localhost/bd/public/cupo.php/api',
 };
 
 /*

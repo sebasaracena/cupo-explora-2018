@@ -1,0 +1,115 @@
+
+
+<div class="col-md-12" id="filtro" style="margin-top:10px">
+    <div class="card border-primary" style="background-color: white!important;">
+        <div class="card-header" style="background-color: white">
+            <div class="row">
+            <div class="col-md-6">
+            <h3><font color="#007bff">Filtro de Busqueda</font></h3>
+            </div>
+            <div class="col-md-6">
+                <select [(ngModel)]="cupo.anio" name="anio"  (change)="onChange()" class="form-control">
+                    <option value="2020"> Año - 2020 </option>    
+                     
+                    <option value="2021" > Año - 2021 </option>
+         
+                          
+                        
+                     
+                      </select></div>
+                    </div>
+        </div>
+        <div class="card-body">
+    <div class=row>
+        <div class="alert alert-primary" role="alert" *ngIf="ayuda">
+            <div align="justify">
+                Estimado usuario aquí puede realizar los filtros por las siguientes categorías: región, carrera y universidad. Si desea realizar una consulta por una <strong>carrera en específico</strong>, basta con <strong>solo  escribir el nombre de la carrera y presionar el botón con el icono </strong>
+                <i class="fas fa-search " style="color:green "></i> en caso de querer consultar por <strong>todas las carrera</strong> basta con presionar el botón con el icono <i class="fas fa-certificate " style="color:green "></i> y se desplegara la
+                información correspondiente.
+            </div>
+            <hr />
+            <div align="justify">
+                Para saber sobre <strong>fechas de postulación y documentos a presentar</strong> basta con presionar <strong>"Requisitos Cupo Explora-Unesco"</strong> localizado en el menu lateral del sitema.
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-sm col-form-label"> <strong>Región</strong> </label>
+                <div class="col-md-6">
+                    <select [(ngModel)]="cupo.cod_region" name="cod_region"  (change)="onChange()" class="form-control">
+                        <option [ngValue]="null"> -- Regiones de Chile -- </option>    
+                         
+                        <option *ngFor="let predios of regiones" value="{{ predios.cod_region}}" >Región de {{predios.nombre}} </option>
+             
+                              
+                            
+                         
+                          </select></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form #forma="ngForm" novalidate="" (keydown.enter)="$event.preventDefault()">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+
+                        <button class="btn btn-outline-success" data-toggle="tooltip" title="Buscar todas las carreras" (click)="busqueda()">
+                        <i class="fas fa-certificate" style="color:green "></i>
+                        
+                    </button>
+
+                    </div>
+
+
+                    <input type="text" [(ngModel)]="cupo.carrera" (keyup)="onkeyup()" #carrera name="carrera" class="form-control" placeholder="//Ingrese carrera de interés o oprima el botón//" required>
+                    <div class="input-group-append">
+
+                        <button [disabled]="!forma.valid" class="btn btn-outline-success" (click)="onChangeSearch()">
+                        <i class="fas fa-search" style="color:green "></i>
+                       
+                        </button>
+
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-sm col-form-label"> <strong>Universidad</strong> </label>
+                <div class="col-md-9">
+                    <select [(ngModel)]="cupo.universidad" name="universidad" (change)="onChange2()" class="form-control">
+                        <option [ngValue]="null"> -- Universidades -- </option> 
+                       
+                         
+                        <option *ngFor="let predios of universidades" value="{{ predios.nombre}}" >{{predios.nombre}} </option>
+                   
+
+                </select>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+    <hr/>
+
+
+</div>
+<div class="col-md-12">
+<div class="map" id="map">
+</div></div>    
+<!-- <div class="col-md-12">
+    <div class="card border-primary" style=" margin-top:20px;background-color: white!important;">
+       <div class="card-body">
+    <app-pivot></app-pivot>
+        </div>
+    </div>
+</div> -->

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MapaComponent } from './mapa/mapa.component';
+import { MapaComponent } from '../components/mapa/mapa.component';
 import Swal from 'sweetalert2';
 declare var $;
 @Component({
@@ -19,12 +19,9 @@ export class DashboardComponent{
 
 
    mensaje() {
-     this.hijo.mensaje='Puto';
+     
    }
  
   
   
 }
-$(document).on('click', "#btn1", function() {
- 
-});

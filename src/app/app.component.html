@@ -1,8 +1,27 @@
 <div id="wrapper">
     <app-navegador></app-navegador>
-    <div id="content">
+   
+    <div id="content" class="active">
+        <nav class="navbar navbar-dark bg-primary">
+          <div (mousedown)="show()" style="color:white;font-size:1.1rem">
+           
+            Cupo Explora Unesco
+           
+            <ng-container *ngIf="open">
+            <i class="fas fa-list-ul" style="margin-left:20px;font-size: 1.3rem;cursor:pointer;"></i>
+          </ng-container>
+          <ng-container *ngIf="!open">
+            <i class="far fa-times-circle" style="margin-left:20px;font-size: 1.3rem;cursor:pointer;"></i>
+          </ng-container>
+          </div>
+          <div (mousedown)="ayuda()" class="nav navbar-nav navbar-right" style="color:white" >
+           <i class="fas fa-question-circle" style="margin-left:5px;font-size: 1.3rem;cursor:pointer;"></i>
+          </div>
+        </nav>
+        <div class="container">
         <router-outlet></router-outlet>
+      </div>
     </div>
-
+   
 
 </div>

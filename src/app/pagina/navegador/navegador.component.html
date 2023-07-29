@@ -1,23 +1,32 @@
-<nav id="sidebar">
+
+<nav id="sidebar" class="active">
+    
     <div class="sidebar-header">
-        <h3>Cupo Explora Unesco</h3>
+        <div style="font-size:1.1rem; colors: white">Menu  <i (mousedown)="hide_menu()" class="far fa-arrow-alt-circle-left" style="float:right;margin-right: 5px;cursor:pointer;font-size: 1.8rem;"></i></div>
+            
     </div>
 
     <ul class="list-unstyled components">
 
         <li class="active">
-            <a routerLink="/mapa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> &nbsp;<i class="fas fa-2x fa-map-marked-alt"></i> Mapa</a>
+            <a (click)="hide_menu()" routerLink="/mapa" data-toggle="collapse" aria-expanded="false"> <i class="fas fa-map-marked-alt" style="margin-right:10px;margin-left: 5px;cursor:pointer"></i> Mapa</a>
 
         </li>
-        <hr />
+      
         <li class="active">
-            <a routerLink="/about">Sobre Cupo Explora Unesco</a>
+            <a (click)="hide_menu()" routerLink="/about">
+                <i class="fas fa-question-circle" style="margin-right:10px;margin-left: 5px;cursor:pointer"></i> Requisitos
+            
+            </a>
         </li>
 
-        <hr />
+    
         <li class="active">
-            <a href="https://drive.google.com/uc?id=15w8JAd5dd85MUstVvT7B9UJQ-vm2sukF&export=download&authuser=0">Descargar consulta <i class="fas fa-download"></i></a>
+            <a href="https://drive.google.com/uc?id=1zi8LwORvxlnbYsY0SpS0NXXmTjKNgl3L&export=download&authuser=0">  <i class="fas fa-download"  style="margin-left: 5px;margin-right: 10px;"></i> Descargar Excel</a>
         </li>
+    
+     
+
     </ul>
 
 

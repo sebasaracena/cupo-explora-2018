@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CupoService } from '../../../servicio/cupo.service';
+import { CupoService } from '../../../../servicio/cupo.service';
 
 import Swal from 'sweetalert2';
-import { Cupo } from '../../../servicio/cupo';
+import { Cupo } from '../../../../servicio/cupo';
 declare let L;
 declare var $;
 @Component({
@@ -14,15 +14,20 @@ export class MapaComponent implements OnInit{
   title = 'cupo-explora';
   map:any;
   Layer:any;
+  load_change:boolean=false;
+  change_region:boolean=false;
+  change_universidades:boolean=false;
   mapOSM:any;
   cupo:Cupo={
     universidad:null,
     carrera:null,
     cod_region:null,
     id_sede:null,
+    anio:'2021',
     porcentaje:'0.5'
   
   }
+  ayuda=false;
   sede:any={
     carrera:null,
     id_sede:null,
@@ -58,9 +63,12 @@ Swal.showLoading();
            
             this.construir_layer_geometrico(this.map,resp);
             this.servicio.select_universidad(this.cupo).subscribe(resp=>{
-                 this.universidades=resp;
+              
+              this.universidades=resp;
+             
                  this.servicio.select_region(this.cupo).subscribe(resp=>{
                  this.regiones=resp;
+                 
                   Swal.close();
                  })
                  
@@ -69,7 +77,10 @@ Swal.showLoading();
 
 
          }
-       )
+       );
+  
+  this.servicio.ayudamenu$.subscribe(r=>this.ayuda=r);
+    
   }
   //armar los overlayer
 
@@ -92,9 +103,25 @@ Swal.showLoading();
           });
         }else{
          this.construir_layer_geometrico(this.map,resp);
+       if(this.change_region && this.cupo.universidad==null){
+        
          this.servicio.select_universidad(this.cupo).subscribe(resp=>this.universidades=resp);
+         
+        }
+       
          this.servicio.select_region(this.cupo).subscribe(resp=>{
-          this.regiones=resp;
+          if(this.change_universidades && this.cupo.cod_region==null){
+            
+            this.regiones=resp;
+            this.change_universidades=false; 
+          
+          }else if(this.change_region && this.cupo.cod_region==null){
+           
+            this.regiones=resp;
+            this.change_region=false; 
+          
+          }
+
           if(this.cupo.carrera==null)Swal.close();
           else{ 
             //this.datos_campus();
@@ -148,10 +175,17 @@ Swal.showLoading();
        
       this.construir_layer(this.map,resp);
       this.servicio.select_universidad(this.cupo).subscribe(resp=>{
+        if(this.change_region &&  this.cupo.universidad==null){
+         
         this.universidades=resp;
+        this.change_region=false;
+      }
         this.servicio.select_region(this.cupo).subscribe(resp=>{
+          if(this.change_universidades && this.cupo.cod_region==null){
           this.regiones=resp;
-          
+          this.change_region=false;
+
+          }
           if(this.trigge==false && this.carreras==false)this.datos_campus();
           
           else if(this.trigge==true && this.cupo.id_sede!=null){ 
@@ -231,6 +265,7 @@ var datos = L.Control.extend({
       container.style.backgroundSize = "32px 32px"; 
       container.style.width = "32px"; 
       container.style.height = "32px";
+    
       container.id = "datos";
 container.title = "Filtrar datos";
  
@@ -242,7 +277,7 @@ container.title = "Filtrar datos";
 
 
 this.map.addControl(new lugar);
-this.map.addControl(new datos); 
+//this.map.addControl(new datos); 
 this.map.on("click", e => {
    
  
@@ -301,10 +336,11 @@ geojson.features.push(feature);
 });
 
 this.Layer = new L.geoJson(geojson,{pointToLayer: function(feature,latlng){
+
   return L.marker(latlng, {
     icon: L.icon({
     iconUrl: './assets/leaflet/images/x_ve.png',
-    iconSize: [24,24],
+    iconSize: [32,32],
     iconAnchor: [12, 28],
     popupAnchor: [0, -25]
   })
@@ -342,6 +378,7 @@ this.Layer.on('click',e => {
   //this.sede.id_sede=localStorage.getItem("id");
   
   
+
    this.datos_sede();
 });
 return 0;
@@ -352,6 +389,7 @@ datos_sede(){
   this.sede.id_sede=localStorage.getItem("id");  
   this.sede.carrera=this.cupo.carrera;
   this.sede.porcentaje=this.cupo.porcentaje;
+  this.sede.anio=this.cupo.anio;
   let html='';
   Swal.fire({
     icon:'info',
@@ -386,7 +424,8 @@ datos_sede(){
             allowOutsideClick: false
           });
           this.map.setView([this.datos[0].latitud,this.datos[0].longitud], 15);          
-  });
+
+        });
 }
 
 datos_campus(){
@@ -398,7 +437,7 @@ datos_campus(){
      
     this.datos=resp;
      
-          html='<hr/><h3>'+this.datos[0].region+'</h3><hr/>';
+          html='<hr/><h3>Región de '+this.datos[0].region+'</h3><hr/>';
           if(Object.keys(resp).length<=11){
             html +="<div   style='width: 100%; height: 100%; overflow-x: scroll;'>";
           }else html +="<div  style='width: 100%; height: 400px; overflow-y: scroll; overflow-x: scroll;'>";
@@ -583,11 +622,12 @@ this.Layer.on('click',e => {
 //cambio en la consulta
 
 onChange(){
-  this.cupo.universidad=null;
+  this.change_region=true;
+   
  this.cupo.id_sede=null;
  localStorage.removeItem('id');
  if(this.cupo.cod_region==null){
-
+  this.cupo.universidad=null;
   this.overlayer_geometrico();
   //this.map.setView([-39.3084824,-67.8595443], 4);
  }else {
@@ -595,16 +635,18 @@ onChange(){
    this.overlayer_puntos();
  }
 
-
+ 
 }
 
 onChange2(){
+  this.change_universidades=true;
   if(this.cupo.universidad==null) localStorage.removeItem("id"); 
   if(this.cupo.cod_region==null){
 
     this.overlayer_geometrico();
     //this.map.setView([-39.3084824,-67.8595443], 4);
    }else {
+
      get_region(this.cupo.cod_region);
      this.overlayer_puntos();
    }
@@ -655,18 +697,7 @@ funcion_jquery(componente:MapaComponent){
     });  
 });
 
-$(document).on("click", "#datos", function() {
-  $("#filtro").toggleClass("dato");
-  
-});
-$(document).on("click", "#menubar", function() {
-   
-  $('#sidebar, #content').toggleClass('active');
-  $('.collapse.in').toggleClass('in');
-  $('a[aria-expanded=true]').attr('aria-expanded', 'false');
- 
-  
-});
+
 }
 
 onChangeSearch(){
@@ -707,7 +738,6 @@ onkeyup(){
 }
 
 }
-
 
 
 

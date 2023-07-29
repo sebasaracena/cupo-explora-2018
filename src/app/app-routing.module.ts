@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SobreComponent } from './pagina/sobre/sobre.component';
-import { DashboardComponent } from './modulos/dashboard/dashboard.component';
+import { DashboardComponent } from './modulos/dashboard/pagina/dashboard.component';
 
 
 const routes: Routes = [{
@@ -21,7 +21,7 @@ const routes: Routes = [{
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

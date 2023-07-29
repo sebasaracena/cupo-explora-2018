@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CupoService {
-   API_URL='http://146.83.102.95/bd/public/cupo.php/api';
-  
+   API_URL=environment.devApiCupoExplora;
+   
+   private open$: Subject<any> = new Subject();
+   readonly openmenu$: Observable<any> = this.open$.asObservable();
+   private ayuda$: Subject<any> = new Subject();
+   readonly ayudamenu$: Observable<any> = this.ayuda$.asObservable();
   //API_URL='http://localhost/bd/public/cupo.php/api';
   constructor(private http:HttpClient) { }
 
@@ -41,4 +47,18 @@ export class CupoService {
   datos_cupo(cupo:any){
     return this.http.post(`${this.API_URL}/cupo/info/`,cupo);
   }
+  
+  tabla_pivot(cupo:any){
+     return this.http.post(`${this.API_URL}/carreras/campus/tablas/`,cupo);
+  }
+
+  openMenu(data){
+    this.open$.next(data);
+  }
+
+  openAyuda(data){
+   this.ayuda$.next(data);
+  }
+  
+ 
 }

@@ -1,0 +1,19 @@
+.card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    color:white;
+    background-color: #007bff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-color: #007bff!important;
+}
+.btn-link {
+    font-weight: 400;
+    color: white!important;
+    background-color: transparent;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    border-color: #007bff!important;
+}

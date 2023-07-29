@@ -1,0 +1,36 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .mat-header-cell {
+    color: #212529!important;
+}
+.mat-table {
+    background: white!important;
+}
+mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    border-bottom-color: #6466c252!important;
+}
+.mat-cell, .mat-footer-cell {
+    color: #212529!important;
+}
+
+.mat-paginator, .mat-paginator-page-size .mat-select-trigger {
+    color: #212529;
+}
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: white;
+}
+
+.mat-select-panel {
+    background: white!important;
+}
+
+.mat-paginator {
+    background: white;
+}

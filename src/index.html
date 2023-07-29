@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>CupoExplora</title>
+    <title>Cupo Explora-Unesco</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="http://wwwfs.mineduc.cl/Archivos/Sige/imagenes/favicon.ico">
@@ -13,6 +13,7 @@
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="./assets/leaflet/plugins/css/L.Control.Sidebar.css">
+  
     <!-- Font Awesome JS -->
     <link rel="stylesheet" href="./assets/leaflet/leaflet.css">
 
@@ -30,6 +31,17 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <link rel="stylesheet" href="./assets/leaflet/plugins/js/L.Control.Sidebar.js">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-208324020-1"></script>
+   
+   
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+  
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -42,15 +54,29 @@
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
             });
+
+            $(document).on("click", "#datos", function() {
+                $("#filtro").toggleClass("dato");
+
+            });
+            $(document).on("click", "#menubar", function() {
+
+                $('#sidebar, #content').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+
+
+            });
         });
     </script>
 
 
     <!-- Page level custom scripts -->
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="mat-typography">
     <app-root></app-root>
 
 </body>
